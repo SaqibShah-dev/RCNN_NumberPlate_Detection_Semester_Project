@@ -1,4 +1,4 @@
-# 🚗 R-CNN Number Plate Detection
+#  R-CNN Number Plate Detection
 
 A complete, beginner-friendly implementation of a Region-based Convolutional Neural Network (R-CNN) for detecting vehicle number plates. Built from scratch using OpenCV and TensorFlow/Keras.
 
@@ -6,7 +6,7 @@ This project was developed for a Computer Vision (AI) university course and serv
 
 ---
 
-## 🧠 How It Works (The R-CNN Pipeline)
+##  How It Works (The R-CNN Pipeline)
 
 This project doesn't use pre-built detection APIs like YOLO or SSD. Instead, it builds the classic R-CNN pipeline step-by-step:
 
@@ -21,7 +21,7 @@ This project doesn't use pre-built detection APIs like YOLO or SSD. Instead, it 
 
 ---
 
-## 🚀 Key Feature: Hard Negative Mining
+##  Key Feature: Hard Negative Mining
 A common issue in Object Detection is the model mistaking complex background objects (like car grills or headlights) for the target object. 
 
 To fix this, the data loader (`Read_Annotation.py`) uses **Hard Negative Mining**. During training data generation:
@@ -30,7 +30,7 @@ To fix this, the data loader (`Read_Annotation.py`) uses **Hard Negative Mining*
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 RCNN_NumberPlate_Detection/
@@ -47,7 +47,7 @@ RCNN_NumberPlate_Detection/
 
 ---
 
-## 🏗️ Model Architecture
+##  Model Architecture
 
 The custom CNN acts as a feature extractor and binary classifier:
 
@@ -69,12 +69,8 @@ The custom CNN acts as a feature extractor and binary classifier:
 
 ---
 
-## 🛠️ Installation & Setup
+##  Installation & Setup
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/RCNN-NumberPlate-Detection.git
-cd RCNN-NumberPlate-Detection
 
 # 2. Install dependencies (TensorFlow, OpenCV, Pandas, Matplotlib)
 pip install -r requirements.txt
@@ -82,7 +78,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 Just run the main script! It handles both training and testing automatically:
 
@@ -100,7 +96,7 @@ python main.py
 
 ---
 
-## 📊 Results Summary
+##  Results Summary
 
 | Metric | Value |
 |---|---|
@@ -113,10 +109,10 @@ python main.py
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Saqib Shah**  
 BSCS (AI) — Semester 6  
 Pir Mehr Ali Shah Arid Agriculture University Rawalpindi  
 
-*(This project is for educational purposes as part of a university Computer Vision lab.)*
+🔗 GitHub : 
