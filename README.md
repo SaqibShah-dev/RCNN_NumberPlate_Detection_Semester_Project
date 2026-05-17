@@ -94,6 +94,13 @@ python main.py
 5. Loads a test image (`Cars0.png`) and runs the complete R-CNN detection pipeline on it.
 6. Pops up a window showing the final detected number plate with a red bounding box!
 
+
+##  Demo
+
+### Detection Result
+![Number Plate Detection Result](demo/result.png)
+
+
 ---
 
 ##  Results Summary
