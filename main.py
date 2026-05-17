@@ -68,7 +68,7 @@ def RCNN(image, model):
     predictions = model.predict(rois_array, batch_size=64, verbose=0)
     print("Prediction done.")
 
-    positive_boxes = [boxes[i] for i, pred in enumerate(predictions) if pred[0] > 0.7]
+    positive_boxes = [boxes[i] for i, pred in enumerate(predictions) if pred[0] > 0.8]
 
     if not positive_boxes:
         print("No number plates detected.")

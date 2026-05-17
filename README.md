@@ -21,12 +21,12 @@ This project doesn't use pre-built detection APIs like YOLO or SSD. Instead, it 
 
 ---
 
-##  Key Feature: Hard Negative Mining
-A common issue in Object Detection is the model mistaking complex background objects (like car grills or headlights) for the target object. 
+##  Key Feature: Hard Mining (Positive & Negative)
+A common issue in Object Detection is the model mistaking complex background objects (like car grills or headlights) for the target object, or missing the object if the bounding box isn't perfect.
 
-To fix this, the data loader (`Read_Annotation.py`) uses **Hard Negative Mining**. During training data generation:
-- **Positive Samples:** The exact bounding boxes of the number plates from `annotations.csv`.
-- **Negative Samples (Background):** We run Selective Search on the training images to find actual car parts (grills, headlights) that have an IoU of `< 0.1` with the real number plate. By training the model on these "hard" background samples, we significantly reduce False Positives!
+To fix this, the data loader (`Read_Annotation.py`) uses **Hard Mining**. During training data generation, we use Selective Search to dynamically build a robust dataset:
+- **Hard Positive Mining:** We extract multiple overlapping crops (IoU > `0.7`) of the actual plate. This teaches the model to recognize the plate even if the proposed region isn't perfectly centered.
+- **Hard Negative Mining:** We extract actual car parts (grills, headlights) that have an IoU of `< 0.1` with the real number plate. By training the model on these "hard" background samples, we significantly reduce False Positives!
 
 ---
 
@@ -71,8 +71,8 @@ The custom CNN acts as a feature extractor and binary classifier:
 
 ##  Installation & Setup
 
-
-# 2. Install dependencies (TensorFlow, OpenCV, Pandas, Matplotlib)
+```bash
+# Install dependencies (TensorFlow, OpenCV, Pandas, Matplotlib)
 pip install -r requirements.txt
 ```
 
@@ -103,7 +103,7 @@ python main.py
 | Training Epochs | 20 |
 | Input Size | 128 × 128 |
 | Target Accuracy | > 80% |
-| Confidence Threshold | 0.7 |
+| Confidence Threshold | 0.8 |
 | NMS Threshold | 0.5 |
 | Selective Search ROIs evaluated | ~500 per image |
 

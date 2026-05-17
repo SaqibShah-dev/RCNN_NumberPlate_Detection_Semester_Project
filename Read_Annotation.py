@@ -26,19 +26,20 @@ def load_data():
 
         # Positive sample (Ground Truth Plate)
         x1, y1, x2, y2 = int(row['xmin']), int(row['ymin']), int(row['xmax']), int(row['ymax'])
+        gt_box = [x1, y1, x2, y2]
         roi = image[y1:y2, x1:x2]
-        if roi.size == 0: continue
-        roi = cv2.resize(roi, (128, 128))
-        x.append(roi)
-        y.append(1)
+        if roi.size > 0:
+            roi = cv2.resize(roi, (128, 128))
+            x.append(roi)
+            y.append(1)
 
-        # Negative sample using Hard Negative Mining via Selective Search
+        # Mining via Selective Search
         ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
         ss.setBaseImage(image)
         ss.switchToSelectiveSearchFast()
         results = ss.process()
         
-        gt_box = [x1, y1, x2, y2]
+        pos_count = 1
         neg_count = 0
         for box in results:
             nx1, ny1 = box[0], box[1]
@@ -48,14 +49,24 @@ def load_data():
             if box[2] < 20 or box[3] < 20: continue
             
             iou = IoU([nx1, ny1, nx2, ny2], gt_box)
-            if iou < 0.1:
+            
+            # Hard positive mining (boxes that tightly overlap the plate)
+            if iou > 0.7 and pos_count < 5:
+                pos_roi = image[ny1:ny2, nx1:nx2]
+                if pos_roi.size > 0:
+                    x.append(cv2.resize(pos_roi, (128, 128)))
+                    y.append(1)
+                    pos_count += 1
+            
+            # Hard negative mining (background)
+            elif iou < 0.1 and neg_count < 10:
                 neg_roi = image[ny1:ny2, nx1:nx2]
                 if neg_roi.size > 0:
-                    neg_roi = cv2.resize(neg_roi, (128, 128))
-                    x.append(neg_roi)
+                    x.append(cv2.resize(neg_roi, (128, 128)))
                     y.append(0)
                     neg_count += 1
-            if neg_count >= 5: # Get up to 5 negative samples per positive sample
+                    
+            if pos_count >= 5 and neg_count >= 10:
                 break
 
     return np.array(x), np.array(y)
